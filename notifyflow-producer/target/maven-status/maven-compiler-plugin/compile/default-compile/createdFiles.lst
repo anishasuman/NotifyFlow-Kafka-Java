@@ -1,0 +1,3 @@
+com\notifyflow\controller\NotifyController.class
+com\notifyflow\ProducerApplication.class
+com\notifyflow\config\KafkaProducerConfig.class

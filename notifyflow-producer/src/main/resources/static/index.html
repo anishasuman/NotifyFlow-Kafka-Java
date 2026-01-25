@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NotifyFlow GUI</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="card">
+    <h1>NotifyFlow – Kafka Notification</h1>
+    <p>Type message and send to Kafka</p>
+
+    <input id="msg" type="text" placeholder="Enter message..." />
+    <button onclick="sendMessage()">Send</button>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    async function sendMessage() {
+      const msg = document.getElementById("msg").value;
+      const result = document.getElementById("result");
+
+      if (!msg) {
+        result.innerHTML = "⚠️ Please enter a message!";
+        return;
+      }
+
+      try {
+        const res = await fetch("http://localhost:8081/notify", {
+          method: "POST",
+          headers: { "Content-Type": "text/plain" },
+          body: msg
+        });
+
+        const text = await res.text();
+        result.innerHTML = text;
+      } catch (err) {
+        result.innerHTML = "❌ Error: Producer not running / Kafka not running";
+      }
+    }
+  </script>
+</body>
+</html>
